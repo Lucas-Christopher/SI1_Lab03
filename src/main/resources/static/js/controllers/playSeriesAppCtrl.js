@@ -134,7 +134,7 @@ angular.module("playSeriesApp").controller("playSeriesAppCtrl", function ($scope
     $scope.authenticateClient = function (idLogin, idPassword) {
       $http({
             method: 'POST',
-            url: 'http://localhost:8080//clients/authenticate',
+            url: 'http://localhost:8080/clients/authenticate',
             data: { email : idLogin , password : idPassword}  
           }).then(function successCallback(response) {
             if ($scope.registrationStatus === false) {
@@ -181,7 +181,7 @@ angular.module("playSeriesApp").controller("playSeriesAppCtrl", function ($scope
     $scope.saveToWatchlist = function(serie) {
       $http({
           method: 'POST',
-          url: 'http://localhost:8080/cliente/watchlist/' + $scope.loggedIn.id,
+          url: 'http://localhost:8080/client/watchlist/' + $scope.loggedIn.id,
           data: serie
         }).then(function successCallback(response) {
           }, function errorCallback(response) {
@@ -193,7 +193,7 @@ angular.module("playSeriesApp").controller("playSeriesAppCtrl", function ($scope
     $scope.deleteProfileSerie = function(serie) {
       $http({
           method: 'DELETE',
-          url: 'http://localhost:8080/cliente/removeFromProfile/' 
+          url: 'http://localhost:8080/client/removeFromProfile/' 
             + $scope.loggedIn.id + "/" + serie.imdbID,
         }).then(function successCallback(response) {
           }, function errorCallback(response) {
@@ -205,7 +205,7 @@ angular.module("playSeriesApp").controller("playSeriesAppCtrl", function ($scope
     $scope.deleteWatchlistSerie = function(serie) {
       $http({
           method: 'DELETE',
-          url: 'http://localhost:8080/cliente/removeFromWatchlist/' 
+          url: 'http://localhost:8080/client/removeFromWatchlist/' 
             + $scope.loggedIn.id + "/" + serie.imdbID,
         }).then(function successCallback(response) {
           }, function errorCallback(response) {
