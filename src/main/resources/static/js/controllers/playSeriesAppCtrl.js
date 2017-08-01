@@ -149,7 +149,7 @@ angular.module("playSeriesApp").controller("playSeriesAppCtrl", function ($scope
               }
             }
           }, function errorCallback(response) {
-             console.log("Fail...");
+             console.log("Fail in authenticate...");
           });
     };
     
@@ -159,10 +159,10 @@ angular.module("playSeriesApp").controller("playSeriesAppCtrl", function ($scope
           url: 'http://localhost:8080/clients',
           data: { name : idName, email : idLogin , password : idPassword} 
         }).then(function successCallback(response) {
-        //  $scope.authenticateClient(idLogin, idPassword);
+          $scope.authenticateClient(idLogin, idPassword);
           alert("Client registered successfully!");
           }, function errorCallback(response) {
-           console.log("Fail...");
+           console.log("Fail to register client...");
           });
       $scope.registrationStatus = true;
     };
@@ -211,21 +211,18 @@ angular.module("playSeriesApp").controller("playSeriesAppCtrl", function ($scope
           }, function errorCallback(response) {
            console.log("Fail to remove watchlist serie...");
           });
-
     }
     
     // Other methods
     
     $scope.IsloggedIn = function() {
       return $scope.loggedIn != null;
-    };
+    }
     
     $scope.signOut = function() {
       $scope.loggedIn = null;
       $scope.profile = [];
       $scope.watchlist = [];
-    
   }
-    
 
 });

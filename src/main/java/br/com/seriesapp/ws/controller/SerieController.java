@@ -24,7 +24,7 @@ public class SerieController {
 	@Autowired
 	private SerieService serieService;
 	
-	@RequestMapping(method=RequestMethod.POST, value = "/profile/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(method = RequestMethod.POST, value = "/profile/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Serie> registerProfileSerie(@RequestBody Serie serie, @PathVariable("id") Integer idClient) {
 		
 		Serie serieRegistered = this.serieService.register(serie);
@@ -32,10 +32,10 @@ public class SerieController {
 		
 		searchedClient.addSerieToProfile(serieRegistered);
 		this.clientService.register(searchedClient); // update
-		return new ResponseEntity<>(HttpStatus.OK);
+		return new ResponseEntity<>(HttpStatus.CREATED);
 	}
 	
-	@RequestMapping(method=RequestMethod.POST, value = "/watchlist/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(method = RequestMethod.POST, value = "/watchlist/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Serie> registerWatchlistSerie(@RequestBody Serie serie, @PathVariable("id") Integer idClient) {
 		
 		Serie serieRegistered = this.serieService.register(serie);
@@ -43,10 +43,10 @@ public class SerieController {
 		
 		searchedClient.addSerieToWatchlist(serieRegistered);
 		this.clientService.register(searchedClient); // update
-		return new ResponseEntity<>(HttpStatus.OK);
+		return new ResponseEntity<>(HttpStatus.CREATED);
 	}
 	
-	@RequestMapping(method=RequestMethod.DELETE, value = "/removeFromProfile/{idClient}/{imdbIdSerie}")
+	@RequestMapping(method = RequestMethod.DELETE, value = "/removeFromProfile/{idClient}/{imdbIdSerie}")
 	public ResponseEntity<String> removeProfileSerie(@PathVariable Integer idClient, @PathVariable String imdbIdSerie) {
 		
 		Client searcheredClient = this.clientService.findById(idClient);
@@ -56,7 +56,7 @@ public class SerieController {
 		return new ResponseEntity<>("Serie removed successfully!", HttpStatus.OK);
 	}
 	
-	@RequestMapping(method=RequestMethod.DELETE, value = "/removeFromWatchlist/{idClient}/{imdbIdSerie}")
+	@RequestMapping(method = RequestMethod.DELETE, value = "/removeFromWatchlist/{idClient}/{imdbIdSerie}")
 	public ResponseEntity<String> removeWatchlistSerie(@PathVariable Integer idClient, @PathVariable String imdbIdSerie) {
 		
 		Client searcheredClient = this.clientService.findById(idClient);

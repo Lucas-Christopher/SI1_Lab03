@@ -1,7 +1,5 @@
 package br.com.seriesapp.ws.service;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import br.com.seriesapp.ws.model.Serie;
@@ -25,10 +23,6 @@ public class SerieService {
 	
 	public Serie getSerieById(Integer id) {
 		return this.serieRepository.findOne(id);
-	}
-	
-	public List<Serie> searchAll() {
-		return this.serieRepository.findAll();
 	}
 	
 }
