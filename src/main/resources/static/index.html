@@ -16,6 +16,7 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
           integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
           crossorigin="anonymous">
+  <link rel="shortcut icon" href="icons/favicon.ico" type="image/x-icon"/>
 
 </head>
 
@@ -182,7 +183,7 @@
                     <label class="col-md-4 control-label" for="idName">Name:</label>
                     <div class="col-md-5">
                       <input ng-model="idName" type="text"
-                        placeholder="Enter your name..." class="form-control input-md" required/>
+                        placeholder="Enter your name..." class="form-control input-md" ng-required="true"/>
                     </div>
                   </div>
 
@@ -191,7 +192,8 @@
                     <label class="col-md-4 control-label" for="idUser">Email:</label>
                     <div class="col-md-5">
                       <input ng-model="idLogin" type="text"
-                        placeholder="Enter your email address..." class="form-control input-md" required/>
+                        placeholder="Enter your email address..." class="form-control input-md" ng-required="true"
+                        ng-pattern="/^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/"/>
                     </div>
                   </div>
 
@@ -200,7 +202,7 @@
                     <label class="col-md-4 control-label" for="idPassword">Password:</label>
                     <div class="col-md-5">
                       <input ng-model="idPassword" type="password"
-                        placeholder="Choose your password..." class="form-control input-md" required/>
+                        placeholder="Choose your password..." class="form-control input-md" ng-required="true"/>
                     </div>
                   </div>
                   
@@ -209,7 +211,7 @@
                     <label class="col-md-4 control-label" for="idPassword2">Confirm password:</label>
                     <div class="col-md-5">
                       <input ng-model="idPassword2" type="password"
-                        placeholder="Confirm your password..." class="form-control input-md" required />
+                        placeholder="Confirm your password..." class="form-control input-md" ng-required="true" />
                     </div>
                   </div>
 
@@ -254,7 +256,8 @@
                     <label class="col-md-4 control-label" for="idUser">Email:</label>
                     <div class="col-md-5">
                       <input ng-model="idLoginLG" type="text"
-                        placeholder="Enter your email address..." class="form-control input-md" required/>
+                        placeholder="Enter your email address..." class="form-control input-md" ng-required="true"
+                        ng-pattern="/^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/"/>
                     </div>
                   </div>
 
@@ -264,7 +267,7 @@
                     <div class="col-md-5">
                       <input ng-model="idPasswordLG" type="password"
                         placeholder="Inform your password..."
-                        class="form-control input-md" required/>
+                        class="form-control input-md" ng-required="true"/>
                     </div>
                   </div>
                   
