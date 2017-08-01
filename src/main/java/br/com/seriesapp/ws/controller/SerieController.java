@@ -16,7 +16,7 @@ import br.com.seriesapp.ws.service.ClientService;
 import br.com.seriesapp.ws.service.SerieService;
 
 @RestController
-@RequestMapping("/client/")
+@RequestMapping("/client")
 public class SerieController {
 	
 	@Autowired

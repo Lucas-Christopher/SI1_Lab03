@@ -25,7 +25,7 @@
 	<div class="container">
 
     <!-- SEARCH BAR -->
-		<nav class="navbar">
+	<nav class="navbar">
       <div class="container-fluid">
         <div class="navbar-header">
           <a class="navbar-brand" href="#">Your series here!</a>
@@ -48,8 +48,20 @@
             </form>
             <!-- Sign in and login -->
             <ul id="navbarRight" class="nav navbar-nav navbar-right">
-              <li><a href="#" data-toggle="modal" data-target="#registrationModal" ng-show="!IsloggedIn()"><span class="glyphicon glyphicon-user"></span>Sign Up</a></li>
-              <li><a href="#" data-toggle="modal" data-target="#loginModal" ng-show="!IsloggedIn()"><span class="glyphicon glyphicon-log-in"></span>Login</a></li>
+              <li><a href="#" data-toggle="modal" data-target="#registrationModal"
+              ng-show="!IsloggedIn()"><span class="glyphicon glyphicon-user"></span>Sign Up</a></li>
+
+              <li><a href="#" data-toggle="modal" data-target="#loginModal"
+              ng-show="!IsloggedIn()"><span class="glyphicon glyphicon-log-in"></span>Login</a></li>
+
+              <li id="entrarCadastrar" ng-show="hasLogado()"><div class="btn-group">
+              <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+              {{"Hello, " + loggedIn.nome + "!"}}<span class="caret"></span>
+              </button>
+              <ul class="dropdown-menu" role="menu">
+                <li><a ng-click="signOut()">Sign Out</a></li>
+              </ul>
+            </div></li>
             </ul>
           </ul>
         </div>
