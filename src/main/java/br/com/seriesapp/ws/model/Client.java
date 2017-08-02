@@ -11,8 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-@Entity(name = "user")
-@Table(name = "tb_user")
+@Entity
+@Table
 public class Client {
 	
 	@Id
@@ -78,17 +78,20 @@ public class Client {
 	}
 	
 	public void addSerieToProfile(Serie serie) {
-		if (this.profile == null) this.profile = new ArrayList<>();
+		if (this.profile == null)
+			this.profile = new ArrayList<>();
 		
 		int index = this.profile.indexOf(serie);
-		if (index == -1)
-			this.profile.add(serie);
-		else
+		
+		if (index != -1)
 			this.profile.set(index, serie);	//update
+		else
+			this.profile.add(serie);
 	}
 	
 	public void addSerieToWatchlist(Serie serie) {
-		if (this.watchlist == null) this.watchlist = new ArrayList<>();
+		if (this.watchlist == null)
+			this.watchlist = new ArrayList<>();
 		
 		if (!this.profile.contains(serie))
 			this.watchlist.add(serie);

@@ -4,9 +4,20 @@ angular.module("playSeriesApp").controller("playSeriesAppCtrl", function ($scope
     $scope.profile = [];
     $scope.watchlist = [];
     $scope.loggedIn;
-    $scope.registrationStatus = false;
     
     // Requests in API IMDB
+
+    $('#registrationModal').on('hidden.bs.modal', function() {
+    $(this).find('form').trigger('reset');
+    $('#loginModal').find('form').trigger('reset');
+
+    });
+  
+    $('#loginModal').on('hidden.bs.modal', function() {
+    $(this).find('form').trigger('reset');
+    $('#registrationModal').find('form').trigger('reset');
+
+    });
     
     $scope.getSeries = function (nomeSerie) {
       seriesService.getSeriesAPI(nomeSerie).then(function (response) {
@@ -15,69 +26,76 @@ angular.module("playSeriesApp").controller("playSeriesAppCtrl", function ($scope
         } else {
           alert("Busca sem sucesso: Série não encontrada!");
         };
+      }, function error(error) {
+          console.log(error);
       });
     };
 
     $scope.addSerieToProfile = function (serie) {
-      if (!$scope.IsloggedIn) {
+      if (!$scope.IsloggedIn()) {
         alert("Você precisa estar conectado para adicionar séries ao seu perfil!");
       } else {
-        // The client is already connected...
-
-        //filteredSerie = $scope.serieFilter(serie);
-
-        if ($scope.containsSerie(serie, $scope.profile)) {
-          alert('"' + serie.Title + '" já está em seu Perfil!');
-        }
-        else {
-          seriesService.getFullSeriesAPI(serie).then(function (response) {
-            //var serieToBeAdded = $scope.serieFilter(response.data);
-            $scope.profile.push(response.data);
-            $scope.saveToProfile(response.data);
-          }).catch(function (error) {
-            console.log(error);
-          });
-  
-          if ($scope.containsSerie(serie, $scope.watchlist)) {
-            $scope.removeSerie(serie, $scope.watchlist);
-            alert('"' + serie.Title + '" que estava em sua Watchlist, agora encontra-se em seu Perfil.')
-          } else {
-            alert('A série "' + serie.Title + '" foi adicionada ao seu Perfil.')
-          }
-        }
+        $scope.auxAddSerieToProfile(serie);
       }
     };
 
+    $scope.auxAddSerieToProfile = function (serie) {
+      if ($scope.containsSerie(serie, $scope.profile)) {
+          alert('"' + serie.Title + '" já está em seu Perfil!');
+      }
+      else {
+        //compressedSerie
+        var promise = seriesService.getFullSeriesAPI(serie).then(function (response) {
+//      var compressedSerie = $scope.serieFilter(response.data);
+          $scope.profile.push(serie);
+          $scope.saveToProfile(serie);
+        }).catch(function (error) {
+          console.log(error);
+        });
+
+        if ($scope.containsSerie(serie, $scope.watchlist)) {
+          $scope.removeSerie(serie, $scope.watchlist);
+          alert('"' + serie.Title + '" que estava em sua Watchlist, agora encontra-se em seu Perfil.')
+        } else {
+          alert('A série "' + serie.Title + '" foi adicionada ao seu Perfil.')
+        }
+      }
+    }
+
     $scope.addSerieToWatchlist = function (serie) {
-      if (!$scope.IsloggedIn) {
+      if (!$scope.IsloggedIn()) {
         alert("Você precisa estar conectado para adicionar séries à sua watchlist!");
       }
       else {
-        // The client is already conneted...
-
-        //filteredSerie = $scope.serieFilter(serie);
-
-        if ($scope.containsSerie(serie, $scope.watchlist)) {
-          alert('"' + serie.Title + '" já está em sua Watchlist!')
-        } else if ($scope.containsSerie(serie, $scope.profile)) {
-          alert('"' + serie.Title + '" já está em seu Perfil, portanto, não pode ser adicionado em sua Watchlist!');
-        } else {
-          $scope.watchlist.push(serie);
-          alert('A série "' + serie.Title + '" foi adicionada à sua Watchlist.');
-          $scope.saveToWatchlist(serie);
-        }
+        $scope.auxAddSerieToWatchlist(serie);
       }
-    };
+    }
+
+    $scope.auxAddSerieToWatchlist = function (serie) {
+      if ($scope.containsSerie(serie, $scope.profile)) {
+        alert('"' + compressedSerie.Title + '" já está em seu Perfil, portanto, não pode ser adicionado em sua Watchlist!');
+      } else {
+        if (!$scope.containsSerie(serie, $scope.watchlist)) {
+          $scope.watchlist.push(serie);
+          $scope.saveToWatchlist(serie);
+          alert('A série "' + serie.Title + '" foi adicionada à sua Watchlist.');
+        } else {
+          alert('"' + serie.Title + '" já está em sua Watchlist!')
+        };
+      };
+    }
 
     $scope.removeProfileSerie = function (serie) {
       if (confirm('Você está preste a remover "'+ serie.Title +'" do Perfil. Prosseguir?') === true) {  
        $scope.removeSerie(serie, $scope.profile);
+       $scope.deleteProfileSerie(serie);
       }
     };
 
     $scope.removeWatchlistSerie = function (serie) {
       if (confirm('Você está preste a remover "'+ serie.Title +'" da Watchlist. Continuar?') === true) {
         $scope.removeSerie(serie, $scope.watchlist);
+        $scope.deleteWatchlistSerie(serie);
       }
     };
 
@@ -109,10 +127,10 @@ angular.module("playSeriesApp").controller("playSeriesAppCtrl", function ($scope
     }
     
     $scope.fillTheArraysWithSeries = function () {
-      if ($scope.loggedIn.profile != undefined){
+      if ($scope.loggedIn.profile != undefined) {
         $scope.profile = angular.copy($scope.loggedIn.profile);
       }
-      if ($scope.loggedIn.watchlist != undefined){
+      if ($scope.loggedIn.watchlist != undefined) {
         $scope.watchlist = angular.copy($scope.loggedIn.watchlist);
       }
     }
@@ -120,11 +138,12 @@ angular.module("playSeriesApp").controller("playSeriesAppCtrl", function ($scope
     // Generates a serie object that has only the attributes needed for our use.
     $scope.serieFilter = function (serie) {
       var serieObject = {
+    	poster: serie.Poster,	  
         imdbRating: serie.imdbRating,
         title: serie.Title,
         rated: serie.Rated,
-        poster: serie.Poster,
-        imdbID: serie.imdbID
+        imdbID: serie.imdbID,
+        plot: serie.plot,
       };
         return serieObject;
     }
@@ -137,19 +156,15 @@ angular.module("playSeriesApp").controller("playSeriesAppCtrl", function ($scope
             url: 'http://localhost:8080/clients/authenticate',
             data: { email : idLogin , password : idPassword}  
           }).then(function successCallback(response) {
-            if ($scope.registrationStatus === false) {
-              alert("You must be logged in to enter!")
+            if (response.data.name == null) {
+              alert("Você deve estar logado para entrar. Reveja seu email e senha.");
             } else {
-              if (response.data.nome == null) {
-                alert("Invalid email or password.");
-              } else{
-                $scope.loggedIn = response.data;
-                $scope.fillTheArraysWithSeries();
-                alert("Welcome, " + response.data.nome + "!");
-              }
+              $scope.loggedIn = response.data;
+              $scope.fillTheArraysWithSeries();
+              alert("Bem vindo(a), " + response.data.name + "!");
             }
           }, function errorCallback(response) {
-             console.log("Fail in authenticate...");
+             console.log("Falha ao autenticar...");
           });
     };
     
@@ -160,11 +175,10 @@ angular.module("playSeriesApp").controller("playSeriesAppCtrl", function ($scope
           data: { name : idName, email : idLogin , password : idPassword} 
         }).then(function successCallback(response) {
           $scope.authenticateClient(idLogin, idPassword);
-          alert("Client registered successfully!");
+          alert("Cliente registrado com sucesso!");
           }, function errorCallback(response) {
-           console.log("Fail to register client...");
+           console.log("Falha ao cadastrar cliente...");
           });
-      $scope.registrationStatus = true;
     };
     
     $scope.saveToProfile = function(serie) {
@@ -174,7 +188,7 @@ angular.module("playSeriesApp").controller("playSeriesAppCtrl", function ($scope
             data: serie
           }).then(function successCallback(response) {
             }, function errorCallback(response) {
-             console.log("Failed to save serie in profile...");
+             console.log("Falha ao salvar série no pefil...");
             });
     }
     
@@ -185,7 +199,7 @@ angular.module("playSeriesApp").controller("playSeriesAppCtrl", function ($scope
           data: serie
         }).then(function successCallback(response) {
           }, function errorCallback(response) {
-           console.log("Failed to save serie in watchlist...");
+           console.log("Falha ao salvar série na watchlist...");
           });
 
     }
@@ -197,7 +211,7 @@ angular.module("playSeriesApp").controller("playSeriesAppCtrl", function ($scope
             + $scope.loggedIn.id + "/" + serie.imdbID,
         }).then(function successCallback(response) {
           }, function errorCallback(response) {
-           console.log("Fail to remove profile serie...");
+           console.log("Falha ao remover série do pefil...");
           });
 
     }
@@ -209,7 +223,7 @@ angular.module("playSeriesApp").controller("playSeriesAppCtrl", function ($scope
             + $scope.loggedIn.id + "/" + serie.imdbID,
         }).then(function successCallback(response) {
           }, function errorCallback(response) {
-           console.log("Fail to remove watchlist serie...");
+           console.log("Falha ao remover série da watchlist...");
           });
     }
     

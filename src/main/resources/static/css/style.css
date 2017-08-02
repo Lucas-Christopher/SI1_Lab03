@@ -8,16 +8,10 @@
 
   }
   
-  .alinhacentro{
+  .alinhacentro {
 	text-align: center;
   }
   
-  #registerAndLogin{
-	padding-top: 7px;
-	padding-left: 5px;
-	
-  }
-
   #thumbsize {
     width: 245px;
     height: 368px;

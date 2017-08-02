@@ -20,6 +20,10 @@ public class ClientService {
 		}
 		return this.clientRepository.save(client);
 	}
+	
+	public Client update(Client client) {
+		return this.clientRepository.save(client);
+	}
 
 	public List<Client> searchAll() {
 		return this.clientRepository.findAll();
@@ -33,9 +37,19 @@ public class ClientService {
 		else
 			return new Client();
 	}
+	
+	public Client findByEmail(Client client) {
+		List<Client> clients = this.searchAll();
+		for (Client customer : clients) {
+			if (customer.getEmail().equals(client.getEmail()))
+				return customer;
+		}
+		return new Client();
+		
+	}
 
 	public Client authenticateClient(Client client) {
-		Client searcheredClient = this.findById(client.getId());
+		Client searcheredClient = this.findByEmail(client);
 
 		if (searcheredClient != null && searcheredClient.getEmail().equals(client.getEmail())
 				&& searcheredClient.getPassword().equals(client.getPassword())) {

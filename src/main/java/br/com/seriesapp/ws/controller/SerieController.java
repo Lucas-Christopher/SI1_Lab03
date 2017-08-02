@@ -31,7 +31,7 @@ public class SerieController {
 		Client searchedClient = this.clientService.findById(idClient);
 		
 		searchedClient.addSerieToProfile(serieRegistered);
-		this.clientService.register(searchedClient); // update
+		this.clientService.update(searchedClient); // update
 		return new ResponseEntity<>(HttpStatus.CREATED);
 	}
 	
@@ -42,7 +42,7 @@ public class SerieController {
 		Client searchedClient = this.clientService.findById(idClient);
 		
 		searchedClient.addSerieToWatchlist(serieRegistered);
-		this.clientService.register(searchedClient); // update
+		this.clientService.update(searchedClient); // update
 		return new ResponseEntity<>(HttpStatus.CREATED);
 	}
 	
@@ -52,7 +52,7 @@ public class SerieController {
 		Client searcheredClient = this.clientService.findById(idClient);
 		searcheredClient.removeProfileSerie(imdbIdSerie);
 		
-		this.clientService.register(searcheredClient); // update
+		this.clientService.update(searcheredClient); // update
 		return new ResponseEntity<>("Serie removed successfully!", HttpStatus.OK);
 	}
 	
@@ -62,7 +62,7 @@ public class SerieController {
 		Client searcheredClient = this.clientService.findById(idClient);
 		searcheredClient.removeWatchlistSerie(imdbIdSerie);
 		
-		this.clientService.register(searcheredClient); // update
+		this.clientService.update(searcheredClient); // update
 		return new ResponseEntity<>("Serie removed successfully!", HttpStatus.OK);
 	}
 

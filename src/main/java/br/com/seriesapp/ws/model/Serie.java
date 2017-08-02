@@ -7,8 +7,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-@Entity(name = "serie")
-@Table(name = "tb_serie")
+@Entity
+@Table
 public class Serie {
 	
 	@Id
@@ -19,7 +19,7 @@ public class Serie {
 	@Column
 	private String plot;
 	@Column
-	private String post;
+	private String poster;
 	@Column
 	private String imdbID;
 	@Column
@@ -53,12 +53,12 @@ public class Serie {
 		this.plot = plot;
 	}
 
-	public String getPost() {
-		return post;
+	public String getPoster() {
+		return poster;
 	}
 
-	public void setPost(String post) {
-		this.post = post;
+	public void setPoster(String poster) {
+		this.poster = poster;
 	}
 
 	public String getImdbID() {
