@@ -4,6 +4,4 @@ _Período_: 2017.1
 
 _Atividade_: Praticando desenvolvimento progressivo com HTML5, CSS3, JavaScript e Java, com auxílio dos frameworks AngularJS e SpringBoot. A atividade trata-se de uma aplicativação que registra um catálogo de séries.
 
-Toda honra e toda glória, tudo vem Dele e tudo é para Ele: JESUS!
-
 ##### _Toda honra e toda glória, tudo vem Dele e tudo é para Ele: JESUS!_
