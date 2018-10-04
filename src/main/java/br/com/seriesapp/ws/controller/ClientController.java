@@ -31,15 +31,9 @@ public class ClientController {
 		return new ResponseEntity<Client>(registeredClient, HttpStatus.CREATED);
 	}
 	
-//	@RequestMapping(method = RequestMethod.GET, value = "/clients", produces = MediaType.APPLICATION_JSON_VALUE)
-//	public ResponseEntity<List<Client>> searchAllClients() {
-//		List<Client> searchedClients = this.clientService.searchAll();
-//		return new ResponseEntity<List<Client>>(searchedClients, HttpStatus.OK);
-//	}
-	
 	@RequestMapping(method = RequestMethod.GET, value = "/clients/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Client> getClientById(@PathVariable Integer id) {
-		Client searcheredClient = this.clientService.findById(id);
+		Client searcheredClient = this.clientService.getById(id);
 			if(searcheredClient != null) {
 				return new ResponseEntity<Client>(searcheredClient, HttpStatus.OK);
 			}

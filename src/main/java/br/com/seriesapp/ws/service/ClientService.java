@@ -7,7 +7,7 @@ import br.com.seriesapp.ws.model.Client;
 import br.com.seriesapp.ws.repository.ClientRepository;
 
 @Service
-public class ClientService {
+public class ClientService implements CrudService<Client, Integer> {
 
 	@Autowired
 	private ClientRepository clientRepository;
@@ -20,24 +20,30 @@ public class ClientService {
 		}
 		return this.clientRepository.save(client);
 	}
-	
+
 	public Client update(Client client) {
 		return this.clientRepository.save(client);
 	}
 
-	public List<Client> searchAll() {
-		return this.clientRepository.findAll();
+	@Override
+	public boolean removeById(Integer id) {
+		if (this.getById(id) != null) {
+			this.clientRepository.delete(id);
+			return true;
+		} else {
+			return false;
+		}
 	}
 
-	public Client findById(Integer id) {
+	public Client getById(Integer id) {
 		Client searcheredClient = this.clientRepository.findOne(id);
-		
+
 		if (searcheredClient != null)
 			return searcheredClient;
 		else
 			return new Client();
 	}
-	
+
 	public Client findByEmail(Client client) {
 		List<Client> clients = this.searchAll();
 		for (Client customer : clients) {
@@ -45,7 +51,11 @@ public class ClientService {
 				return customer;
 		}
 		return new Client();
-		
+
+	}
+
+	public List<Client> searchAll() {
+		return this.clientRepository.findAll();
 	}
 
 	public Client authenticateClient(Client client) {

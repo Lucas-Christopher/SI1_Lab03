@@ -18,50 +18,52 @@ import br.com.seriesapp.ws.service.SerieService;
 @RestController
 @RequestMapping("/client")
 public class SerieController {
-	
+
 	@Autowired
 	private ClientService clientService;
 	@Autowired
 	private SerieService serieService;
-	
+
 	@RequestMapping(method = RequestMethod.POST, value = "/profile/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Serie> registerProfileSerie(@RequestBody Serie serie, @PathVariable("id") Integer idClient) {
-		
+
 		Serie serieRegistered = this.serieService.register(serie);
-		Client searchedClient = this.clientService.findById(idClient);
-		
+		Client searchedClient = this.clientService.getById(idClient);
+
 		searchedClient.addSerieToProfile(serieRegistered);
 		this.clientService.update(searchedClient); // update
 		return new ResponseEntity<>(HttpStatus.CREATED);
 	}
-	
+
 	@RequestMapping(method = RequestMethod.POST, value = "/watchlist/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Serie> registerWatchlistSerie(@RequestBody Serie serie, @PathVariable("id") Integer idClient) {
-		
+	public ResponseEntity<Serie> registerWatchlistSerie(@RequestBody Serie serie,
+			@PathVariable("id") Integer idClient) {
+
 		Serie serieRegistered = this.serieService.register(serie);
-		Client searchedClient = this.clientService.findById(idClient);
-		
+		Client searchedClient = this.clientService.getById(idClient);
+
 		searchedClient.addSerieToWatchlist(serieRegistered);
 		this.clientService.update(searchedClient); // update
 		return new ResponseEntity<>(HttpStatus.CREATED);
 	}
-	
+
 	@RequestMapping(method = RequestMethod.DELETE, value = "/removeFromProfile/{idClient}/{imdbIdSerie}")
 	public ResponseEntity<String> removeProfileSerie(@PathVariable Integer idClient, @PathVariable String imdbIdSerie) {
-		
-		Client searcheredClient = this.clientService.findById(idClient);
+
+		Client searcheredClient = this.clientService.getById(idClient);
 		searcheredClient.removeProfileSerie(imdbIdSerie);
-		
+
 		this.clientService.update(searcheredClient); // update
 		return new ResponseEntity<>("Serie removed successfully!", HttpStatus.OK);
 	}
-	
+
 	@RequestMapping(method = RequestMethod.DELETE, value = "/removeFromWatchlist/{idClient}/{imdbIdSerie}")
-	public ResponseEntity<String> removeWatchlistSerie(@PathVariable Integer idClient, @PathVariable String imdbIdSerie) {
-		
-		Client searcheredClient = this.clientService.findById(idClient);
+	public ResponseEntity<String> removeWatchlistSerie(@PathVariable Integer idClient,
+			@PathVariable String imdbIdSerie) {
+
+		Client searcheredClient = this.clientService.getById(idClient);
 		searcheredClient.removeWatchlistSerie(imdbIdSerie);
-		
+
 		this.clientService.update(searcheredClient); // update
 		return new ResponseEntity<>("Serie removed successfully!", HttpStatus.OK);
 	}

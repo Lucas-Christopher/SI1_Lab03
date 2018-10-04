@@ -10,7 +10,7 @@ import javax.persistence.Table;
 @Entity
 @Table
 public class Serie {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
@@ -117,7 +117,5 @@ public class Serie {
 			return false;
 		return true;
 	}
-	
-	
-	
+
 }

@@ -14,15 +14,14 @@ import br.com.seriesapp.ws.service.ClientService;
 
 @RestController
 public class LoginController {
-		
+
 	@Autowired
 	private ClientService clientService;
-	
+
 	@RequestMapping(method = RequestMethod.POST, value = "/clients/authenticate",
-			consumes = MediaType.APPLICATION_JSON_VALUE,
-			produces = MediaType.APPLICATION_JSON_VALUE)
+			consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Client> authenticate(@RequestBody Client client) {
 		return new ResponseEntity<>(this.clientService.authenticateClient(client), HttpStatus.OK);
 	}
-	
+
 }
