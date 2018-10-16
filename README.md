@@ -4,7 +4,7 @@ _College subject_: Sistemas de Informação I - UFCG
 
 _Period_: 2017.1
 
-_Activity_: Practicing progressive development with HTML5, CSS3, JavaScript and Java. The activity is an application that registers a series and films catalog.
+_Activity_: Practicing progressive development with HTML5, CSS3, JavaScript and Java, using REST architecture. The activity is an application that registers a series and films catalog.
 
 _Frameworks_: AngularJS, Spring framework (Spring Boot, Spring MVC and Spring Data JPA);
               
